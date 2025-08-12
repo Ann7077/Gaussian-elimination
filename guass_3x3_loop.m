@@ -21,7 +21,7 @@ for n = 1:1:(r-1)
 end
 
 % solution
-arr = zeros(1,[]);
+arr = zeros(r,1);
 arr(r) = b(r)/a(r,r);
 var1 = ['x' num2str(r)];
 fprintf("%s = %d\n",[var1], arr(r));
