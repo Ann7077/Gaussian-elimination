@@ -1,7 +1,8 @@
 function result = gauss_3x3_loop(a,b)
 
     r = length(b);
-
+    
+    %{
     %%% check leading zeros (only in the original matrix)
 
     for i = 1:r  % Loop over each row i from 1 to number of rows
@@ -49,8 +50,25 @@ function result = gauss_3x3_loop(a,b)
             end
         end
     end
+    %}
+
 
     %%% solve
+    %{
+    The outer loop deterines how many times the matrix will be gone
+    through. For example, a 4x4 matrix would be gone through 3 times (ex: 
+    1st time - row 1, 2, 3, 4. 2nd time - row 2, 3, 4. 3rd time - row 3, 
+    4). Since at the beginning of every loop, what need to be done is 
+    divid each value of the top row by that row's value on the diagonal, 
+    that's what the first two lines in the outer for loop is for. Then it's 
+    the inner for loop. After the first value at the beginning of each
+    outer for loop, we would always do two things. One, the b value of that
+    row is the current b value minues that row's first value divide by that
+    row's value on the diagonal multipled by the b value. Two, each element
+    of a in that row is the current value element minues that's row's first
+    value divided by that row's value on the diagonal multiplied by that
+    value of the element that is being operated on. 
+    %}
     for n = 1:(r-1) 
         b(n) = b(n)/a(n,n);
         a(n,:) = a(n,:)/a(n,n);
@@ -59,7 +77,8 @@ function result = gauss_3x3_loop(a,b)
             a(m,:) = a(m,:) - (a(m,n)/a(n,n))*a(n,:);
         end
     end
-    
+
+
     %%% solution
     %{
     The three lines above the for loop calculates the x value for the
