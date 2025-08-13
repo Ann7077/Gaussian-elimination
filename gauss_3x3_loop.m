@@ -70,6 +70,20 @@ function result = gauss_3x3_loop(a,b)
     value of the element that is being operated on. 
     %}
     for n = 1:(r-1) 
+        %%%
+        if (10^(-6) > a(n,n)) && (a(n,n) > -10^(-6))
+            n1 = n+1;
+                while (10^(-6) > a(n1,n)) && (a(n1,n) > -10^(-6)) == true
+                    n1 = n1+1;
+                end
+                temp = a(n,:);
+                a(n,:) = a(n1,:);
+                a(n1,:) = temp;
+                temp_b = b(n);
+                b(n) = b(n1);
+                b(n1) = temp_b;
+        end
+        %%%
         b(n) = b(n)/a(n,n);
         a(n,:) = a(n,:)/a(n,n);
         for m = (n+1):1:r
