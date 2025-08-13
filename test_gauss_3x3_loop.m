@@ -17,6 +17,14 @@ ref2 = a2\b2
 
 x2 = gauss_3x3_loop(a2,b2);
 
+% example 3 - leading zero longer than allowed while solving
+a3 = [1 2 0 1; 2 1 1 1; 3 0 2 3; 1 -1 2 0];
+b3 = [3; 0; 4; 1];
+
+ref3 = a3\b3
+
+x3 = gauss_3x3_loop(a3,b3);
+
 
 %a2 = [2 3 4; 5 6 7; 7 9 11];
 %b2 = [13; 32; 45];
