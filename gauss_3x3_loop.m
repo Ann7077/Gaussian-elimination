@@ -51,7 +51,7 @@ function result = gauss_3x3_loop(a,b)
     end
 
     %%% solve
-    for n = 1:(r-1)
+    for n = 1:(r-1) 
         b(n) = b(n)/a(n,n);
         a(n,:) = a(n,:)/a(n,n);
         for m = (n+1):1:r
@@ -61,9 +61,30 @@ function result = gauss_3x3_loop(a,b)
     end
     
     %%% solution
-    arr = zeros(r,1);
-    arr(r) = b(r)/a(r,r);
-    var1 = ['x' num2str(r)];
+    %{
+    The three lines above the for loop calculates the x value for the
+    highest order (ex: if the variables are x1 x2 x3 x4 x5, then the three 
+    lines is calculating the value of x5). The first line under the for
+    loop found the second term for any x values that's not the largest one
+    (ex: calculate the second term for variable x4 and below). As you can
+    see in the example, each x value has one more term than the previous x
+    value. the job of the while loop is add the value of the new term to
+    the array arr where all the x values are stored. It adds until there
+    are no terms left, the exit the while loop and print out the final
+    value.
+
+    Example: 
+    x5 = b(5)/a(5,5);
+    x4 = b(4) - a(4,5)*x5;
+    x3 = b(3) - a(3,4)*x4 - a(3,5)*x5;
+    x2 = b(2) - a(2,3)*x3 - a(2,4)*x4 - a(2,5)*x5;
+    x1 = b(1) - a(1,2)*x2 - a(1,3)*x3 - a(1,4)*x4 - a(1,5)*x5;
+    %}
+
+    arr = zeros(r,1);  % Create empty array with length of r
+
+    arr(r) = b(r)/a(r,r); % This is used to find the x value of the highest order
+    var1 = ['x' num2str(r)]; % This create an variable name
     fprintf("%s = %d\n", var1, arr(r)); 
     
     for i = (r-1):-1:1
@@ -78,27 +99,7 @@ function result = gauss_3x3_loop(a,b)
         fprintf("%s = %d\n", var2, arr(i)); 
     end
 
-    result = arr;
-    
-    %{
-    x5 = b(5)/a(5,5);
-    x4 = b(4) - a(4,5)*x5;
-    x3 = b(3) - a(3,4)*x4 - a(3,5)*x5;
-    x2 = b(2) - a(2,3)*x3 - a(2,4)*x4 - a(2,5)*x5;
-    x1 = b(1) - a(1,2)*x2 - a(1,3)*x3 - a(1,4)*x4 - a(1,5)*x5;
-    %}
-    
-    %{
-    var1 = ['x' num2str(r)];
-    fprintf("%s = %d\n",[var1], [b(r)/a(r,r)]);
-    
-    for i = (r-1):-1:1
-        var2 = ['x' num2str(i)];
-        temp = [b(i) - a(i,1+1)*var1]
-        fprintf("%s = %d\n",[var2], temp);
-    end
-    %}
-    
+    result = arr;    
     
     %{
     %%% solution (hard code)
