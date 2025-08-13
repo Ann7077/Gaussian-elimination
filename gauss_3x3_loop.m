@@ -1,57 +1,6 @@
 function result = gauss_3x3_loop(a,b)
 
     r = length(b);
-    
-    %{
-    %%% check leading zeros (only in the original matrix)
-
-    for i = 1:r  % Loop over each row i from 1 to number of rows
-        row_i = a(i,:);  % Get the entire row i of matrix a
-        
-        leading_zeros_i = 0;  % Initialize counter for leading zeros in row i
-        
-        for k = 1:length(row_i)  % Loop over each element k in the row
-            if row_i(k) == 0  % Check if the element is zero
-                leading_zeros_i = leading_zeros_i + 1;  % If zero, increase the count
-            else
-                break  % Stop counting zeros once a nonzero is found
-            end
-        end
-        
-        max_allowed = i - 1;  % Define max allowed leading zeros for row i (row 1 allows 0, row 2 allows 1, etc.)
-        
-        if leading_zeros_i > max_allowed  % If current row has too many leading zeros
-            for j = (i+1):r  % Look for a row below i to swap with (rows j > i)
-                row_j = a(j,:);  % Get row j
-                
-                leading_zeros_j = 0;  % Initialize leading zero counter for row j
-                
-                for k = 1:length(row_j)  % Count leading zeros in row j
-                    if row_j(k) == 0
-                        leading_zeros_j = leading_zeros_j + 1;
-                    else
-                        break  % Stop counting at first nonzero in row j
-                    end
-                end
-                
-                if leading_zeros_j <= max_allowed  % If row j meets the allowed zero count
-                    % Swap row i and row j in matrix a
-                    temp_row = a(i,:);
-                    a(i,:) = a(j,:);
-                    a(j,:) = temp_row;
-                    
-                    % Swap the corresponding elements in vector b
-                    temp_b = b(i);
-                    b(i) = b(j);
-                    b(j) = temp_b;
-                    
-                    break  % Stop looking for more rows to swap after this swap
-                end
-            end
-        end
-    end
-    %}
-
 
     %%% solve
     %{
@@ -70,7 +19,12 @@ function result = gauss_3x3_loop(a,b)
     value of the element that is being operated on. 
     %}
     for n = 1:(r-1) 
-        %%%
+        % This section helps with the the value on the diaagonal is zero
+        % and need line switching. If a(n,n) == 0,then we use n1 to check
+        % if the same location in the following line is also zero until we
+        % we find one that's not zero with the while loop. Then we swap the
+        % two lines. a(n,n) == 0 is written as (10^(-6) > a(n,n)) && 
+        % (a(n,n) > -10^(-6)) to accommodate errors
         if (10^(-6) > a(n,n)) && (a(n,n) > -10^(-6))
             n1 = n+1;
                 while (10^(-6) > a(n1,n)) && (a(n1,n) > -10^(-6)) == true
@@ -83,7 +37,8 @@ function result = gauss_3x3_loop(a,b)
                 b(n) = b(n1);
                 b(n1) = temp_b;
         end
-        %%%
+        
+        % This is the actual solving part
         b(n) = b(n)/a(n,n);
         a(n,:) = a(n,:)/a(n,n);
         for m = (n+1):1:r
@@ -133,17 +88,5 @@ function result = gauss_3x3_loop(a,b)
     end
 
     result = arr;    
-    
-    %{
-    %%% solution (hard code)
-    x3 = b(3)/a(3,3);
-    x2 = b(2) - a(2,3)*x3;
-    x1 = b(1) - a(1,2)*x2 - a(1,3)*x3;
-    
-    %%% print solution (hard code)
-    fprintf("x1 = %d\n", x1);
-    fprintf("x2 = %d\n", x2);
-    fprintf("x3 = %d\n", x3);
-    %}
 
 end
