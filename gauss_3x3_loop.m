@@ -27,8 +27,8 @@ function result = gauss_3x3_loop(a,b)
         % (a(n,n) > -10^(-6)) to accommodate errors
         if (10^(-6) > a(n,n)) && (a(n,n) > -10^(-6))
             n1 = n+1;
-                while (10^(-6) > a(n1,n)) && (a(n1,n) > -10^(-6)) == true
-                    n1 = n1+1;
+                while (10^(-6) > a(n1,n)) && (a(n1,n) > -10^(-6)) == true        
+                    n1 = n1+1;   % There's no code stopping the +1 when there are no rows left in the matirx can be be used for the switch 
                 end
                 temp = a(n,:);
                 a(n,:) = a(n1,:);
