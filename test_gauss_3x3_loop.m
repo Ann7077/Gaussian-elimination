@@ -23,15 +23,24 @@ ref2 = a2\b2;
 a3 = [1 2 0 1; 2 1 1 1; 3 0 2 3; 1 -1 2 0];
 b3 = [3; 0; 4; 1];
 
-ref3 = a3\b3
+ref3 = a3\b3;
 
-x3 = gauss_3x3_loop(a3,b3);
+%x3 = gauss_3x3_loop(a3,b3);
 
 
-%%% example 4 - zero on bottom right corner at last step
+%%% example 4 - zeros on diagonal while solving
 a4 = [1 1 1 1; 2 3 4 5; 3 5 7 9; 4 7 10 13];
 b4 = [10; 20; 30; 1];
 
-ref4 = a4\b4
+ref4 = a4\b4;
 
 x4 = gauss_3x3_loop(a4,b4);
+
+
+%%% example 5 - zero on bottom right corner at last step
+a5 = [1 1 1 1; 1 2 4 8; 1 3 9 27; 3 6 14 36];
+b5 = [1; 1; 1; 0];
+
+ref5 = a5\b5
+
+x5 = gauss_3x3_loop(a5,b5);

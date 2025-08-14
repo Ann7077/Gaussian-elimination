@@ -25,11 +25,25 @@ function result = gauss_3x3_loop(a,b)
         % we find one that's not zero with the while loop. Then we swap the
         % two lines. a(n,n) == 0 is written as (10^(-6) > a(n,n)) && 
         % (a(n,n) > -10^(-6)) to accommodate errors
+        
         if (10^(-6) > a(n,n)) && (a(n,n) > -10^(-6))
             n1 = n+1;
-                while (10^(-6) > a(n1,n)) && (a(n1,n) > -10^(-6)) == true        
-                    n1 = n1+1;   % There's no code stopping the +1 when there are no rows left in the matirx can be be used for the switch 
+                for count = 1:(r-n)
+                    if (10^(-6) > a(n1,n)) && (a(n1,n) > -10^(-6))
+                        n1 = n1+1;
+                        if n1 > r
+                            n1 = n1-1;
+                            fprintf("No solution 1 \n");
+                            break;
+                        end
+                    else
+                        break;
+                    end
                 end
+
+                % while (10^(-6) > a(n1,n)) && (a(n1,n) > -10^(-6)) == true        
+                %     n1 = n1+1;   % There's no code stopping the +1 when there are no rows left in the matirx can be be used for the switch
+                % end
                 temp = a(n,:);
                 a(n,:) = a(n1,:);
                 a(n1,:) = temp;
@@ -70,6 +84,10 @@ function result = gauss_3x3_loop(a,b)
     %}
 
     arr = zeros(r,1);  % Create empty array with length of r
+    
+    if (1e-6 > a(r,r)) && (a(r,r) > -1e-6)  % If a(r,r) is zero at the last step
+       fprintf("No solution 2 \n");
+    end
 
     arr(r) = b(r)/a(r,r); % This is used to find the x value of the highest order
     var1 = ['x' num2str(r)]; % This create an variable name
